@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do Zero ao Lucro — O Curso</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --yellow: #f5c518;
+    --orange: #e8500a;
+    --gray: #1a1a1a;
+    --gray2: #2a2a2a;
+    --muted: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Archivo', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(245,197,24,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,80,10,0.08) 0%, transparent 60%);
+  }
+
+  .ticker {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 6vw;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 14vw, 13rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title span { color: var(--yellow); }
+
+  .hero-subtitle-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 32px 0 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-line {
+    width: 3px;
+    height: 80px;
+    background: var(--orange);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    line-height: 1.55;
+    color: #c8c0b0;
+    max-width: 560px;
+  }
+  .hero-subtitle strong { color: var(--white); }
+
+  .hero-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 4px 4px 0 var(--orange);
+  }
+  .btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--orange);
+  }
+  .btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--orange);
+  }
+
+  .hero-proof {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .hero-proof strong { color: var(--yellow); }
+
+  .hero-scroll {
+    padding: 32px 6vw;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+    position: relative;
+    z-index: 1;
+  }
+  .scroll-line { flex: 1; max-width: 80px; height: 1px; background: var(--gray2); }
+  .scroll-text { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--gray);
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+  }
+  .stat-item {
+    padding: 40px 20px;
+    border-right: 1px solid #222;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .stat-item:hover::before { transform: scaleX(1); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--yellow);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 6vw; }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-tag::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--orange); }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 0.92;
+    margin-bottom: 20px;
+  }
+
+  /* ── PROBLEM ── */
+  .problem { background: var(--gray); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .problem-text p {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: #b0a898;
+    margin-bottom: 20px;
+  }
+  .problem-text p strong { color: var(--white); }
+  .problem-text .highlight {
+    background: rgba(245,197,24,0.1);
+    border-left: 3px solid var(--yellow);
+    padding: 20px 24px;
+    margin-top: 32px;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .pain-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .pain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--black);
+    border: 1px solid #222;
+    transition: border-color 0.2s;
+  }
+  .pain-item:hover { border-color: var(--orange); }
+  .pain-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .pain-text { font-size: 0.95rem; line-height: 1.55; color: #b0a898; }
+  .pain-text strong { color: var(--white); display: block; margin-bottom: 4px; }
+
+  /* ── FOR WHO ── */
+  .forwho-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .forwho-card {
+    background: var(--gray);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .forwho-card:hover { background: var(--gray2); }
+  .forwho-card::before {
+    content: attr(data-num);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    color: rgba(245,197,24,0.06);
+    position: absolute;
+    top: -10px; right: 10px;
+    line-height: 1;
+  }
+  .forwho-icon { font-size: 2rem; margin-bottom: 20px; }
+  .forwho-title { font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 1.1rem; margin-bottom: 12px; color: var(--yellow); }
+  .forwho-desc { font-size: 0.9rem; line-height: 1.6; color: var(--muted); }
+
+  /* ── CURRICULUM ── */
+  .curriculum { background: var(--gray); }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 60px;
+  }
+
+  .module-card {
+    background: var(--black);
+    padding: 36px 32px;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card:hover {
+    border-left-color: var(--yellow);
+    background: #0f0f0f;
+  }
+  .module-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+  .module-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+  .module-lessons { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .module-lesson {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #888;
+    transition: color 0.2s;
+  }
+  .module-card:hover .module-lesson { color: #aaa; }
+  .module-lesson::before { content: '→'; color: var(--orange); font-size: 0.75rem; }
+
+  .module-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── BONUSES ── */
+  .bonuses-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+  .bonus-card {
+    border: 1px solid #222;
+    padding: 32px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .bonus-card:hover { border-color: var(--yellow); transform: translateY(-4px); }
+  .bonus-tag {
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .bonus-title { font-weight: 900; font-size: 1.05rem; margin-bottom: 10px; }
+  .bonus-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .bonus-value { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--yellow); margin-top: 16px; }
+
+  /* ── INSTRUCTOR ── */
+  .instructor-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+  .instructor-visual {
+    aspect-ratio: 3/4;
+    background: var(--gray2);
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+  }
+  .instructor-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245,197,24,0.05) 0%, transparent 60%);
+  }
+  .instructor-avatar {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--black);
+  }
+  .instructor-text p { font-size: 1rem; line-height: 1.75; color: #b0a898; margin-bottom: 16px; }
+  .instructor-text p strong { color: var(--white); }
+  .instructor-creds {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .cred-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+  .cred-dot { width: 8px; height: 8px; background: var(--yellow); flex-shrink: 0; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--gray); }
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 60px;
+  }
+  .test-card {
+    background: var(--black);
+    padding: 36px 32px;
+    position: relative;
+  }
+  .test-card::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: rgba(245,197,24,0.15);
+    position: absolute;
+    top: 10px; left: 20px;
+    line-height: 1;
+  }
+  .test-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #c0b8a8;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .test-author { display: flex; align-items: center; gap: 12px; }
+  .test-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+  .test-name { font-weight: 700; font-size: 0.9rem; }
+  .test-role { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+  .test-stars { color: var(--yellow); font-size: 0.8rem; margin-bottom: 6px; }
+
+  /* ── PRICING ── */
+  .pricing-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 60px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .price-card {
+    background: var(--gray);
+    padding: 48px 40px;
+    position: relative;
+  }
+  .price-card.featured {
+    background: var(--yellow);
+    color: var(--black);
+  }
+  .price-badge {
+    position: absolute;
+    top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 6px 20px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .price-plan {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0.7;
+  }
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4.5rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .price-period { font-size: 0.85rem; opacity: 0.6; margin-bottom: 32px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .price-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+  .price-feature::before {
+    content: '✓';
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .price-card.featured .price-feature::before { color: var(--black); }
+  .price-feature.no { opacity: 0.4; }
+  .price-feature.no::before { content: '✗'; }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: transform 0.15s;
+    width: 100%;
+  }
+  .btn-dark:hover { transform: translateY(-2px); }
+
+  .guarantee {
+    margin-top: 60px;
+    background: var(--gray);
+    border: 1px solid #222;
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .guarantee-icon { font-size: 4rem; flex-shrink: 0; }
+  .guarantee-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 12px; }
+  .guarantee-text { font-size: 0.95rem; color: #b0a898; line-height: 1.65; }
+
+  /* ── FAQ ── */
+  .faq-list { display: flex; flex-direction: column; gap: 3px; margin-top: 60px; max-width: 800px; }
+  .faq-item { background: var(--gray); }
+  .faq-q {
+    padding: 24px 28px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .faq-q:hover { background: var(--gray2); }
+  .faq-q .arrow {
+    font-size: 1.2rem;
+    color: var(--yellow);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.93rem;
+    line-height: 1.7;
+    color: #b0a898;
+    padding: 0 28px;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding: 0 28px 24px; }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: var(--yellow);
+    color: var(--black);
+    text-align: center;
+    padding: 120px 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-cta::before {
+    content: 'AGORA';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30vw;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.06;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .final-cta .section-title { color: var(--black); position: relative; z-index: 1; }
+  .final-cta p { font-size: 1.15rem; max-width: 560px; margin: 0 auto 48px; position: relative; z-index: 1; opacity: 0.75; }
+  .btn-black {
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 20px 52px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    box-shadow: 6px 6px 0 var(--orange);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-black:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--orange); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 1px solid #1a1a1a;
+    padding: 48px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; }
+  .footer-brand span { color: var(--yellow); }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #444; width: 100%; margin-top: 24px; }
+
+  /* ── STICKY CTA ── */
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--black);
+    border-top: 2px solid var(--yellow);
+    padding: 16px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+  }
+  .sticky-bar.visible { transform: translateY(0); }
+  .sticky-price { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--yellow); }
+  .sticky-label { font-size: 0.8rem; color: var(--muted); }
+  .btn-sticky {
+    background: var(--yellow);
+    color: var(--black);
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ── COPY PAGE ── */
+  .copy-section {
+    padding: 80px 6vw;
+    border-top: 1px solid #1a1a1a;
+  }
+  .copy-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .copy-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .copy-block {
+    background: var(--gray);
+    border: 1px solid #222;
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .copy-block-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .copy-block-content {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #c8c0b0;
+    white-space: pre-wrap;
+    font-family: 'Archivo', sans-serif;
+  }
+  .copy-block-content strong { color: var(--white); }
+  .copy-btn {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: transparent;
+    border: 1px solid #333;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    padding: 6px 14px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-right: 1px solid #222; }
+    .problem-grid, .instructor-grid, .modules-grid, .forwho-grid, .test-grid, .bonuses-row, .pricing-wrapper { grid-template-columns: 1fr; }
+    .guarantee { flex-direction: column; text-align: center; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .sticky-bar { flex-wrap: wrap; gap: 12px; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div>
+    <div class="sticky-label">Acesso completo ao curso</div>
+    <div class="sticky-price">R$ 197</div>
+  </div>
+  <a href="#pricing" class="btn-sticky">Quero Começar Agora</a>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    DO ZERO AO LUCRO &nbsp;·&nbsp; MÉTODO TESTADO &nbsp;·&nbsp; SEM ENROLAÇÃO &nbsp;·&nbsp; PARA QUEM TEM PRESSA &nbsp;·&nbsp; HABILIDADE REAL &nbsp;·&nbsp; LIBERDADE FINANCEIRA &nbsp;·&nbsp; DO ZERO AO LUCRO &nbsp;·&nbsp; MÉTODO TESTADO &nbsp;·&nbsp; SEM ENROLAÇÃO &nbsp;·&nbsp; PARA QUEM TEM PRESSA &nbsp;·&nbsp; HABILIDADE REAL &nbsp;·&nbsp; LIBERDADE FINANCEIRA &nbsp;·&nbsp; DO ZERO AO LUCRO &nbsp;·&nbsp; MÉTODO TESTADO &nbsp;·&nbsp; SEM ENROLAÇÃO &nbsp;·&nbsp; PARA QUEM TEM PRESSA &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">// O método que ninguém te ensinou na escola</div>
+    <h1 class="hero-title">DO <span>ZERO</span><br>AO LUCRO</h1>
+    <div class="hero-subtitle-block">
+      <div class="hero-line"></div>
+      <p class="hero-subtitle">
+        O curso completo para quem está <strong>cansado de ser pobre</strong> e quer um caminho real, prático e sem bullshit para construir renda do absoluto zero em 2026.
+      </p>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#pricing" class="btn-primary">Quero Mudar Minha Vida →</a>
+      <div class="hero-proof">
+        <strong>+4.200 alunos</strong> já começaram<br>
+        Garantia de <strong>7 dias</strong> ou dinheiro de volta
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Role para descobrir o método</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">4.2K+</span>
+    <span class="stat-label">Alunos ativos</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">8</span>
+    <span class="stat-label">Módulos completos</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">7</span>
+    <span class="stat-label">Dias de garantia</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">R$0</span>
+    <span class="stat-label">Pra começar aplicar</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-tag">O problema</div>
+  <h2 class="section-title">VOCÊ NÃO É<br>PREGUIÇOSO.</h2>
+  <div class="problem-grid">
+    <div class="problem-text">
+      <p>Você só nunca teve acesso ao <strong>mapa certo</strong>. Enquanto uns poucos aprendiam sobre dinheiro, juros compostos e habilidades que o mercado paga bem — a maioria de nós aprendia a ser funcionário.</p>
+      <p>Não é sua culpa. Mas daqui pra frente, <strong>é sua responsabilidade</strong>. E esse curso existe pra te dar o que ninguém te deu até hoje.</p>
+      <div class="highlight">
+        "A pobreza não é falta de esforço. É falta de acesso ao conhecimento certo na hora certa."
+      </div>
+    </div>
+    <ul class="pain-list">
+      <li class="pain-item">
+        <span class="pain-icon">💸</span>
+        <div class="pain-text">
+          <strong>Trabalha muito e sobra pouco</strong>
+          Você troca horas por dinheiro, mas o dinheiro nunca chega no fim do mês.
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-icon">🎯</span>
+        <div class="pain-text">
+          <strong>Não sabe por onde começar</strong>
+          Tem vontade, mas falta um caminho claro. Cada guru fala uma coisa diferente.
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-icon">⏰</span>
+        <div class="pain-text">
+          <strong>Sente que o tempo está passando</strong>
+          Vê pessoas da sua idade crescendo e fica se perguntando o que elas sabem que você não sabe.
+        </div>
+      </li>
+      <li class="pain-item">
+        <span class="pain-icon">😤</span>
+        <div class="pain-text">
+          <strong>Cansado de promessas vazias</strong>
+          Já viu muita coisa na internet que prometia resultado e não entregou nada.
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section>
+  <div class="section-tag">Para quem é</div>
+  <h2 class="section-title">ESSE CURSO<br>É PRA VOCÊ SE...</h2>
+  <div class="forwho-grid">
+    <div class="forwho-card" data-num="01">
+      <div class="forwho-icon">🔥</div>
+      <div class="forwho-title">Você está no absoluto zero</div>
+      <div class="forwho-desc">Sem dinheiro, sem habilidade específica, sem ideia por onde começar. O curso começa exatamente de onde você está.</div>
+    </div>
+    <div class="forwho-card" data-num="02">
+      <div class="forwho-icon">⚡</div>
+      <div class="forwho-title">Você quer velocidade</div>
+      <div class="forwho-desc">Não quer esperar 4 anos de faculdade pra ter resultado. Quer aprender, aplicar e gerar renda em meses, não décadas.</div>
+    </div>
+    <div class="forwho-card" data-num="03">
+      <div class="forwho-icon">💪</div>
+      <div class="forwho-title">Você está disposto a trabalhar</div>
+      <div class="forwho-desc">Não existe fórmula mágica aqui. Mas existe um método claro, e você está disposto a executar.</div>
+    </div>
+    <div class="forwho-card" data-num="04">
+      <div class="forwho-icon">📱</div>
+      <div class="forwho-title">Você tem acesso à internet</div>
+      <div class="forwho-desc">É literalmente tudo que você precisa. Celular ou computador. Conexão. E esse método.</div>
+    </div>
+    <div class="forwho-card" data-num="05">
+      <div class="forwho-icon">🎯</div>
+      <div class="forwho-title">Você está cansado de ser pobre</div>
+      <div class="forwho-desc">Não de forma conformada — de forma que te move. Essa raiva saudável é o combustível mais poderoso que existe.</div>
+    </div>
+    <div class="forwho-card" data-num="06">
+      <div class="forwho-icon">🧠</div>
+      <div class="forwho-title">Você quer aprender de verdade</div>
+      <div class="forwho-desc">Não atalhos, não jogo sujo. Uma habilidade real que você carrega pelo resto da vida.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum" id="curriculum">
+  <div class="section-tag">O que você vai aprender</div>
+  <h2 class="section-title">8 MÓDULOS.<br>UM CAMINHO.</h2>
+  <div class="modules-grid">
+
+    <div class="module-card">
+      <div class="module-badge">FUNDAÇÃO</div>
+      <div class="module-num">// MÓDULO 01</div>
+      <div class="module-title">MENTALIDADE DE QUEM VENCE</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Por que você está pobre (sem julgamento, com solução)</li>
+        <li class="module-lesson">Como funciona o dinheiro de verdade</li>
+        <li class="module-lesson">O erro fatal de quem quer crescer rápido</li>
+        <li class="module-lesson">Construindo a identidade de quem prospera</li>
+        <li class="module-lesson">Eliminando crenças limitantes uma por uma</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 02</div>
+      <div class="module-title">ESTABILIDADE ANTES DE ESCALA</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Como gerar renda imediata partindo do zero</li>
+        <li class="module-lesson">Os melhores bicos que pagam rápido em 2026</li>
+        <li class="module-lesson">Construindo sua reserva de emergência</li>
+        <li class="module-lesson">Como cortar gastos sem sofrer</li>
+        <li class="module-lesson">A regra do primeiro R$1.000 guardado</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 03</div>
+      <div class="module-title">ESCOLHENDO SUA HABILIDADE</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">As 5 habilidades mais valiosas de 2026</li>
+        <li class="module-lesson">Como descobrir qual é a certa pra você</li>
+        <li class="module-lesson">Tráfego pago: o caminho mais rápido</li>
+        <li class="module-lesson">Edição de vídeo: alta demanda, baixa concorrência</li>
+        <li class="module-lesson">Copywriting: escrever que vende</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 04</div>
+      <div class="module-title">APRENDENDO EM VELOCIDADE MÁXIMA</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Como aprender qualquer coisa 3x mais rápido</li>
+        <li class="module-lesson">Os melhores recursos gratuitos da internet</li>
+        <li class="module-lesson">Técnica de aprendizado por projetos reais</li>
+        <li class="module-lesson">Construindo portfólio sem ter clientes</li>
+        <li class="module-lesson">O método de 90 dias para dominar uma habilidade</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 05</div>
+      <div class="module-title">CONSEGUINDO OS PRIMEIROS CLIENTES</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Como vender mesmo sem experiência</li>
+        <li class="module-lesson">O script de abordagem que funciona</li>
+        <li class="module-lesson">Onde encontrar clientes sem gastar nada</li>
+        <li class="module-lesson">Como precificar seu trabalho direito</li>
+        <li class="module-lesson">Transformando clientes em clientes fixos</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 06</div>
+      <div class="module-title">ESCALANDO SEUS RESULTADOS</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Da hora trocada por dinheiro para o sistema</li>
+        <li class="module-lesson">Como cobrar mais pelo mesmo trabalho</li>
+        <li class="module-lesson">Subcontratando e multiplicando sua capacidade</li>
+        <li class="module-lesson">Construindo autoridade no seu nicho</li>
+        <li class="module-lesson">Criando a primeira fonte de renda passiva</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">// MÓDULO 07</div>
+      <div class="module-title">EDUCAÇÃO FINANCEIRA REAL</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Como o dinheiro funciona (o que não ensinam)</li>
+        <li class="module-lesson">Juros compostos: o melhor amigo e o pior inimigo</li>
+        <li class="module-lesson">Onde colocar o primeiro dinheiro guardado</li>
+        <li class="module-lesson">Armadilhas financeiras que mantêm você pobre</li>
+        <li class="module-lesson">Construindo patrimônio do zero</li>
+      </ul>
+    </div>
+
+    <div class="module-card">
+      <div class="module-badge">BÔNUS</div>
+      <div class="module-num">// MÓDULO 08</div>
+      <div class="module-title">SUSTENTANDO O CRESCIMENTO</div>
+      <ul class="module-lessons">
+        <li class="module-lesson">Como manter a disciplina quando a empolgação passa</li>
+        <li class="module-lesson">Construindo uma rede de contatos do zero</li>
+        <li class="module-lesson">Protegendo sua saúde mental na jornada</li>
+        <li class="module-lesson">Próximos passos depois da estabilidade</li>
+        <li class="module-lesson">O plano de 2 anos para liberdade real</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- BONUSES -->
+<section>
+  <div class="section-tag">O que vem junto</div>
+  <h2 class="section-title">BÔNUS QUE<br>VALEM O DOBRO.</h2>
+  <div class="bonuses-row">
+    <div class="bonus-card">
+      <span class="bonus-tag">Bônus 01</span>
+      <div class="bonus-title">Planilha de Controle Financeiro</div>
+      <div class="bonus-desc">Planilha completa, pronta pra usar, que controla entradas, saídas, metas e investimentos. Simples o suficiente pra quem odeie planilha.</div>
+      <div class="bonus-value">Valor: R$97 — GRÁTIS</div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-tag">Bônus 02</span>
+      <div class="bonus-title">Scripts de Vendas Prontos</div>
+      <div class="bonus-desc">10 scripts de abordagem testados para conseguir clientes pelo WhatsApp, Instagram e e-mail. Copia, adapta e envia.</div>
+      <div class="bonus-value">Valor: R$147 — GRÁTIS</div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-tag">Bônus 03</span>
+      <div class="bonus-title">Comunidade Exclusiva</div>
+      <div class="bonus-desc">Acesso ao grupo privado com outros alunos, lives mensais de perguntas e respostas, e suporte direto para dúvidas do curso.</div>
+      <div class="bonus-value">Valor: R$197 — GRÁTIS</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section style="background: var(--gray);">
+  <div class="section-tag">Quem criou</div>
+  <h2 class="section-title">UMA VOZ<br>QUE VIVEU ISSO.</h2>
+  <div class="instructor-grid">
+    <div class="instructor-visual">
+      <div class="instructor-avatar">V</div>
+      <span>Sua foto aqui</span>
+    </div>
+    <div class="instructor-text">
+      <p>Comecei do absoluto zero. <strong>Sem dinheiro, sem faculdade, sem padrinho.</strong> Só com um celular barato e muita raiva de estar parado.</p>
+      <p>Em 18 meses aprendi tráfego pago, consegui meus primeiros clientes, e hoje fatura uma operação digital de múltiplos dígitos mensais — enquanto ajudo outras pessoas a fazerem o mesmo.</p>
+      <p><strong>Esse curso não é teoria de quem nunca precisou trabalhar.</strong> É o mapa exato que eu gostaria de ter tido quando comecei.</p>
+      <div class="instructor-creds">
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <span>+4.200 alunos formados nos últimos 2 anos</span>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <span>Especialista em tráfego pago e marketing digital</span>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <span>Palestrante em eventos de empreendedorismo</span>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <span>Criador de conteúdo com +200K seguidores</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">Resultados reais</div>
+  <h2 class="section-title">O QUE DIZEM<br>OS ALUNOS.</h2>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <div class="test-text">Comecei sem saber nada. Em 3 meses consegui meu primeiro cliente de tráfego pago e fechei R$800 no mês. Hoje são 4 clientes fixos e fatura R$3.200/mês.</div>
+      <div class="test-author">
+        <div class="test-avatar">M</div>
+        <div>
+          <div class="test-name">Marcos Silva</div>
+          <div class="test-role">Gestor de Tráfego · SP</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <div class="test-text">Eu era entregador de aplicativo. Aprendi edição de vídeo no módulo 3 e em 4 meses já estava faturando mais com isso do que com as entregas. Agora só edito.</div>
+      <div class="test-author">
+        <div class="test-avatar">R</div>
+        <div>
+          <div class="test-name">Rafael Costa</div>
+          <div class="test-role">Editor de Vídeo · RJ</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <div class="test-text">O que mudou pra mim foi o módulo de mentalidade. Parece papo de coach, mas não é. É direto e sem enrolação. Mudou como eu enxergo o dinheiro completamente.</div>
+      <div class="test-author">
+        <div class="test-avatar">A</div>
+        <div>
+          <div class="test-name">Ana Beatriz</div>
+          <div class="test-role">Copywriter Freelancer · MG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag">Investimento</div>
+  <h2 class="section-title" style="text-align:center;">ESCOLHA O<br>SEU PLANO.</h2>
+  <div class="pricing-wrapper">
+
+    <div class="price-card">
+      <div class="price-plan">// Plano Básico</div>
+      <div class="price-amount">R$97</div>
+      <div class="price-period">pagamento único · acesso por 1 ano</div>
+      <ul class="price-features">
+        <li class="price-feature">Acesso aos 8 módulos</li>
+        <li class="price-feature">Planilha financeira</li>
+        <li class="price-feature no">Scripts de vendas</li>
+        <li class="price-feature no">Comunidade exclusiva</li>
+        <li class="price-feature no">Lives mensais ao vivo</li>
+        <li class="price-feature no">Suporte direto</li>
+      </ul>
+      <a href="#" class="btn-dark">Começar com o Básico</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">MAIS ESCOLHIDO</div>
+      <div class="price-plan">// Plano Completo</div>
+      <div class="price-amount">R$197</div>
+      <div class="price-period">pagamento único · acesso vitalício</div>
+      <ul class="price-features">
+        <li class="price-feature">Acesso aos 8 módulos</li>
+        <li class="price-feature">Planilha financeira</li>
+        <li class="price-feature">Scripts de vendas</li>
+        <li class="price-feature">Comunidade exclusiva</li>
+        <li class="price-feature">Lives mensais ao vivo</li>
+        <li class="price-feature">Suporte direto</li>
+      </ul>
+      <a href="#" class="btn-dark">Quero o Plano Completo →</a>
+    </div>
+
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡️</div>
+    <div>
+      <div class="guarantee-title">GARANTIA DE 7 DIAS</div>
+      <div class="guarantee-text">Se em 7 dias você sentir que o curso não é pra você — por qualquer motivo — você recebe 100% do seu dinheiro de volta. Sem burocracia, sem perguntas. Simples assim. O risco é zero. A decisão é sua.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background: var(--gray);">
+  <div class="section-tag">Dúvidas</div>
+  <h2 class="section-title">PERGUNTAS<br>FREQUENTES.</h2>
+  <div class="faq-list" id="faqList">
+
+    <div class="faq-item">
+      <div class="faq-q">Preciso ter dinheiro pra começar a aplicar o método? <span class="arrow">+</span></div>
+      <div class="faq-a">Não. O curso foi construído exatamente para quem não tem dinheiro nenhum. As habilidades ensinadas não exigem investimento inicial — você só precisa de acesso à internet e disposição.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Em quanto tempo verei resultados? <span class="arrow">+</span></div>
+      <div class="faq-a">Depende da sua dedicação, mas alunos que seguem o método chegam ao primeiro real em 30 a 90 dias. Não é da noite pro dia, mas é bem mais rápido do que a maioria imagina.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Preciso ter experiência em alguma área? <span class="arrow">+</span></div>
+      <div class="faq-a">Não. O curso começa do absoluto zero. Você aprende a habilidade do início — da teoria até o primeiro cliente real.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">O curso é em vídeo ou e-book? <span class="arrow">+</span></div>
+      <div class="faq-a">É em formato de vídeo-aulas com materiais complementares em PDF. Você acessa pela plataforma, no computador ou celular, no seu próprio ritmo.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">E se eu não gostar? <span class="arrow">+</span></div>
+      <div class="faq-a">Você tem 7 dias de garantia total. Pede o reembolso, recebe 100% de volta. Sem questionamentos.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Por quanto tempo terei acesso? <span class="arrow">+</span></div>
+      <div class="faq-a">No plano básico, 1 ano. No plano completo, acesso vitalício — inclusive todas as atualizações futuras do curso sem pagar nada a mais.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2 class="section-title">A MUDANÇA<br>COMEÇA HOJE.</h2>
+  <p>Você pode fechar essa página e continuar igual. Ou pode tomar a única decisão que pode mudar tudo.</p>
+  <a href="#pricing" class="btn-black">Começar Agora por R$197 →</a>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SEÇÃO DE COPYS PRONTAS
+═══════════════════════════════════════════════════ -->
+
+<div class="copy-section">
+  <div class="copy-title">COPYS PRONTAS</div>
+  <div class="copy-subtitle">// Use nas plataformas, anúncios e redes sociais</div>
+
+  <!-- COPY 1 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 01 · HEADLINE PRINCIPAL · Para página de vendas</div>
+    <div class="copy-block-content">Se você está cansado de trabalhar muito e sobrar pouco — esse curso foi feito pra você.
+
+"Do Zero ao Lucro" é o método completo para quem quer construir renda real em 2026, partindo do absoluto zero, sem precisar de dinheiro, sem faculdade, sem padrinho.
+
+<strong>8 módulos. Habilidade real. Resultado em meses.</strong>
+
+Mais de 4.200 pessoas já começaram. E você?</div>
+  </div>
+
+  <!-- COPY 2 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 02 · ANÚNCIO INSTAGRAM/FACEBOOK · Formato curto</div>
+    <div class="copy-block-content">Eu fui entregador de app. Hoje fatura 5 dígitos por mês com uma habilidade que aprendi do zero em 90 dias.
+
+Não é sorte. É método.
+
+O curso "Do Zero ao Lucro" te ensina exatamente como fazer isso — sem investimento inicial, sem experiência prévia.
+
+👉 Link na bio. Vagas limitadas.</div>
+  </div>
+
+  <!-- COPY 3 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 03 · ANÚNCIO INSTAGRAM/FACEBOOK · Dor + Solução</div>
+    <div class="copy-block-content">Se você chegou no fim do mês e perguntou pra você mesmo "cadê o dinheiro?" — você precisa ver isso.
+
+A maioria das pessoas não é pobre por preguiça.
+É pobre porque nunca ninguém ensinou o mapa certo.
+
+O curso "Do Zero ao Lucro" é esse mapa.
+
+✅ 8 módulos completos
+✅ Habilidades que o mercado paga bem em 2026
+✅ Do absoluto zero — sem investimento inicial
+✅ Garantia de 7 dias
+
+Clica no link. Muda o jogo.</div>
+  </div>
+
+  <!-- COPY 4 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 04 · STORIES · Engajamento + CTA</div>
+    <div class="copy-block-content">Pergunta rápida 👇
+
+Você está onde queria estar financeiramente?
+
+Se a resposta for não — o problema raramente é esforço.
+
+É que ninguém te ensinou como o dinheiro de verdade funciona. Que habilidades o mercado realmente paga. Como conseguir clientes do zero.
+
+Esse é o curso que eu gostaria de ter tido.
+
+👉 Desliza pra cima e garante o seu acesso.</div>
+  </div>
+
+  <!-- COPY 5 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 05 · E-MAIL MARKETING · Sequência de lançamento</div>
+    <div class="copy-block-content">Assunto: Você não é preguiçoso. Só ninguém te ensinou isso.
+
+Olá,
+
+Vou ser direto.
+
+Você provavelmente já tentou melhorar de vida. Já se esforçou. Já acordou cedo, já trabalhou até tarde.
+
+E mesmo assim, o dinheiro nunca parece suficiente.
+
+Sabe por quê? Porque esforço sem direção é só cansaço.
+
+O "Do Zero ao Lucro" não é mais um curso de motivação. É um método. Um caminho concreto, com passo a passo, para quem quer sair da estaca zero e construir renda real em 2026.
+
+Sem enrolação. Sem promessa mágica. Só método testado por mais de 4.200 alunos.
+
+Clica aqui e garante o seu acesso com garantia de 7 dias.
+
+→ [LINK DO CURSO]
+
+Até lá,
+[Seu nome]</div>
+  </div>
+
+  <!-- COPY 6 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 06 · HOTMART / KIWIFY · Descrição do produto</div>
+    <div class="copy-block-content">DO ZERO AO LUCRO — O Método Completo para Construir Renda em 2026
+
+Esse curso foi criado para quem está no absoluto zero e quer um caminho real, sem bullshit, para começar a gerar renda com uma habilidade valorizada pelo mercado.
+
+O QUE VOCÊ VAI APRENDER:
+→ Módulo 1: Mentalidade de quem vence — por que você está pobre e como mudar isso
+→ Módulo 2: Como gerar renda imediata e construir estabilidade
+→ Módulo 3: As 5 habilidades mais valiosas de 2026 e como escolher a sua
+→ Módulo 4: Como aprender em velocidade máxima (sem gastar)
+→ Módulo 5: Como conseguir os primeiros clientes do zero
+→ Módulo 6: Como escalar seus resultados e parar de trocar horas por dinheiro
+→ Módulo 7: Educação financeira real — o que nunca te ensinaram
+→ Módulo 8: Sustentando o crescimento a longo prazo
+
+BÔNUS INCLUÍDOS:
+🎁 Planilha de controle financeiro (R$97)
+🎁 10 Scripts de vendas prontos (R$147)
+🎁 Comunidade exclusiva + lives mensais (R$197)
+
+GARANTIA: 7 dias com reembolso total garantido. Zero risco.
+
+Mais de 4.200 alunos. Resultados reais. Método testado.</div>
+  </div>
+
+  <!-- COPY 7 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 07 · WHATSAPP · Mensagem de vendas direta</div>
+    <div class="copy-block-content">Oi! Tudo bem?
+
+Quero te contar sobre algo que pode mudar sua situação financeira em 2026.
+
+Lancei um curso completo chamado "Do Zero ao Lucro" — pra quem está no absoluto zero e quer construir renda real com uma habilidade que o mercado paga bem.
+
+São 8 módulos com método testado por mais de 4.200 pessoas. Habilidades como tráfego pago, edição de vídeo e copywriting — que você aprende do zero e começa a faturar em meses.
+
+Tá por apenas R$197 (acesso vitalício) com garantia de 7 dias.
+
+Posso te mandar o link?</div>
+  </div>
+
+  <!-- COPY 8 -->
+  <div class="copy-block">
+    <button class="copy-btn" onclick="copyText(this)">COPIAR</button>
+    <div class="copy-block-tag">// COPY 08 · URGÊNCIA · Para últimos dias de lançamento</div>
+    <div class="copy-block-content">⚠️ ÚLTIMA CHAMADA
+
+Em 48 horas o preço do "Do Zero ao Lucro" volta pra R$397.
+
+Hoje você ainda pega por R$197 — com acesso vitalício e todos os bônus.
+
+Isso é R$200 de diferença por uma decisão que pode mudar os próximos anos da sua vida.
+
+Você pode adiar.
+Mas a sua situação não vai adiar.
+
+👉 [LINK DO CURSO]
+
+Garantia de 7 dias. Zero risco.</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">DO <span>ZERO</span> AO LUCRO</div>
+  <div class="footer-links">
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Termos de Uso</a>
+    <a href="#">Contato</a>
+    <a href="#">Suporte</a>
+  </div>
+  <div class="footer-copy">© 2026 Do Zero ao Lucro · Todos os direitos reservados · Produto digital — entregue via plataforma online · Garantia de 7 dias</div>
+</footer>
+
+<script>
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Sticky bar
+  const stickyBar = document.getElementById('stickyBar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 600) stickyBar.classList.add('visible');
+    else stickyBar.classList.remove('visible');
+  });
+
+  // Copy buttons
+  function copyText(btn) {
+    const block = btn.parentElement;
+    const text = block.querySelector('.copy-block-content').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'COPIADO ✓';
+      btn.style.borderColor = 'var(--yellow)';
+      btn.style.color = 'var(--yellow)';
+      setTimeout(() => {
+        btn.textContent = 'COPIAR';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  }
+
+  // Intersection Observer for subtle reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.module-card, .bonus-card, .forwho-card, .test-card, .stat-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
